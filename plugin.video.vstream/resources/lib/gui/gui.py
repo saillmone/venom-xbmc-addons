@@ -766,6 +766,29 @@ class cGui:
 
         del self.thread_listing[:]
 
+        filter_mode = int(self.ADDON.getSetting('release_filter_mode') or '0')
+        if filter_mode in (1, 2):
+            sRaw = self.ADDON.getSetting('release_filter_keywords') or ''
+            keywords = [kw.strip().upper() for kw in sRaw.split(',') if kw.strip()]
+            if keywords:
+                def _entry_matches_keywords(entry):
+                    oListItem = entry[1]
+                    sTitle = oListItem.getLabel() if oListItem else ''
+                    sTitleUpper = sTitle.upper()
+                    return any(kw in sTitleUpper for kw in keywords)
+
+                normal = []
+                excluded = []
+                for entry in self.listing:
+                    if _entry_matches_keywords(entry):
+                        excluded.append(entry)
+                    else:
+                        normal.append(entry)
+                if filter_mode == 1:
+                    self.listing = normal + excluded
+                elif filter_mode == 2:
+                    self.listing = normal
+
         xbmcplugin.addDirectoryItems(iHandler, self.listing, len(self.listing))
         xbmcplugin.setPluginCategory(iHandler, '')
         xbmcplugin.setContent(iHandler, cGui.CONTENT)
@@ -773,7 +796,9 @@ class cGui:
             xbmcplugin.addSortMethod(iHandler, xbmcplugin.SORT_METHOD_EPISODE)
         else:
             xbmcplugin.addSortMethod(iHandler, xbmcplugin.SORT_METHOD_NONE)
-        xbmcplugin.endOfDirectory(iHandler, succeeded=True, cacheToDisc=True)
+        # Désactivation du cache disque si un filtre de release est actif
+        bCacheToDisc = False if filter_mode > 0 else True
+        xbmcplugin.endOfDirectory(iHandler, succeeded=True, cacheToDisc=bCacheToDisc)
         # reglage vue
         # 50 = liste / 51 grande liste / 500 icone / 501 gallerie / 508 fanart /
         if forceViewMode:

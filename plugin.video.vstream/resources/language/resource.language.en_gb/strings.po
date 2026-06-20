@@ -1193,6 +1193,26 @@ msgctxt "#30481"
 msgid "Interface"
 msgstr ""
 
+msgctxt "#30500"
+msgid "Release exclusion"
+msgstr "Release exclusion"
+
+msgctxt "#30501"
+msgid "Disabled"
+msgstr "Disabled"
+
+msgctxt "#30502"
+msgid "Move to end of list"
+msgstr "Move to end of list"
+
+msgctxt "#30503"
+msgid "Hide"
+msgstr "Hide"
+
+msgctxt "#30504"
+msgid "Keywords to filter (comma-separated)"
+msgstr "Keywords to filter (comma-separated)"
+
 # upnext
 msgctxt "#30505"
 msgid "Would you like to automatically play the next episode?"

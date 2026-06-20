@@ -36,6 +36,8 @@ c'est le changelog de la beta !        <setting label="30036" type="action" acti
         <setting id="information-view" type="bool" label="31102" default="false"/>
         <setting id="display_season_title" type="bool" label="31204" default="true"/>
         <setting id="display_info_file" type="bool" label="31207" default="false"/>
+        <setting id="release_filter_mode" type="enum" label="30500" lvalues="30501|30502|30503" default="0"/>
+        <setting id="release_filter_keywords" type="text" label="30504" default="4K, UHD" enable="eq(-1,1)|eq(-1,2)"/>
 
         <setting label="30032" type="lsep"/>
         <setting type="sep"/>
